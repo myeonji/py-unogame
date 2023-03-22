@@ -1,19 +1,18 @@
-from .state import GameState
-from scene import MenuScene
+import pygame
+
+from states import GameState
+from utils import scene_name
 
 class MenuState(GameState):
     def __init__(self):
         super().__init__()
-        self.set_scene(MenuScene())
+        self.changed = False
 
-    def handle_events(self, events):
-        for event in events:
-            # Handle input to transition between states
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_s:
-                    return "PLAYING", ()
-                elif event.key == pygame.K_c:
-                    return "CONFIGURATION", ()
-                elif event.key == pygame.K_q:
-                    sys.exit()
-        return None, ()
+    def start_single_play(self):
+        self.move_scene(scene_name.PLAYING_GAME)
+
+    def open_configuration(self):
+        self.move_scene(scene_name.CONFIGURATION)
+
+    def exit(self):
+        pygame.quit()

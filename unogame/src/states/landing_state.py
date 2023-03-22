@@ -1,19 +1,19 @@
-from .state import GameState
-from scene import LandingScene
 import pygame
+
+from states import GameState
+from utils import scene_name
+
 
 class LandingState(GameState):
     def __init__(self):
         super().__init__()
-        self.set_scene(LandingScene())
+        self.changed = False
+        self.start_game = False
+        self.timer_event = pygame.USEREVENT + 1
+        pygame.time.set_timer(self.timer_event, 3000)
 
-    def handle_events(self, events):
-        for event in events:
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                return "MENU", ()
-        return None, ()
-
-    def update(self):
-        if self.scene.is_over():
-            return "MENU", ()
-        return None
+    def start(self, event):
+        if event.type == self.timer_event:
+            self.start_game = True
+            self.changed = True
+            self.move_scene(scene_name.MAIN_MENU)

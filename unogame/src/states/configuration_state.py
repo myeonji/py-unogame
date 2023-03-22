@@ -1,14 +1,8 @@
-from .state import GameState
-from scene import ConfigurationScene
-import pygame
-
-class ConfigurationState(GameState):
+class ConfigurationState:
     def __init__(self):
-        super().__init__()
-        self.set_scene(ConfigurationScene())
+        self.changed = False
+        self.return_to_main_menu = False
 
-    def handle_events(self, events):
-        for event in events:
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                return "MENU", ()
-        return None, ()
+    def back_to_main_menu(self):
+        self.return_to_main_menu = True
+        self.changed = True

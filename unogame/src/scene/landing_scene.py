@@ -1,22 +1,25 @@
 import pygame
-from .scene import Scene
+import pygame_gui
+
+from scene import Scene
+from states import LandingState
 
 
 class LandingScene(Scene):
+    def __init__(self, screen, gui_manager):
+        super().__init__(screen, gui_manager)
+        self.state = LandingState()
+        self.logo_image = pygame.image.load("assets/logo.png")
+        self.single_play_button = pygame_gui.elements.UIButton(
+            relative_rect=pygame.Rect((550, 225), (100, 50)),
+            text="Landing",
+            manager=self.gui_manager
+        )
 
-    def __init__(self):
-        super().__init__()
-        self.font = pygame.font.Font(None, 36)
-        self.start_time = pygame.time.get_ticks()
-        self.display_time = 3000
+    def process_events(self, event):
+        self.state.start(event)
 
-    def draw(self, screen, **kwargs):
-        text = self.font.render("Welcome to Unocatme", True, (255, 255, 255))
-        screen.blit(text, (screen.get_width() // 2 - text.get_width() // 2, screen.get_height() // 2 - text.get_height() // 2))
-
-        remaining_time = self.display_time - (pygame.time.get_ticks() - self.start_time)
-        countdown_text = self.font.render(f"{remaining_time // 1000}", True, (255, 255, 255))
-        screen.blit(countdown_text, (screen.get_width() // 2 - countdown_text.get_width() // 2, screen.get_height() // 2 + text.get_height()))
-
-    def is_over(self):
-        return pygame.time.get_ticks() - self.start_time >= self.display_time
+    def draw(self):
+        self.screen.fill((0, 0, 0))
+        self.screen.blit(self.logo_image, (150, 100))
+        self.gui_manager.draw_ui(self.screen)
