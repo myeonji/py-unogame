@@ -1,9 +1,7 @@
 class GameState:
     def __init__(self):
-        self.scene = None
-
-    def set_scene(self, scene):
-        self.scene = scene
+        self.changed = False
+        self.next_scene_name = None
 
     def handle_events(self, events):
         pass
@@ -11,6 +9,6 @@ class GameState:
     def update(self):
         pass
 
-    def draw(self, screen, *args):
-        if self.scene:
-            self.scene.draw(screen)
+    def move_scene(self, next_scene_name):
+        self.changed = True
+        self.next_scene_name = next_scene_name
