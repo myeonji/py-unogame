@@ -1,49 +1,40 @@
 import pygame
 import sys
-from states import LandingState, MenuState, PlayingState
-from config import SCREEN_WIDTH, SCREEN_HEIGHT
+from pygame.locals import *
 
-# Initialize pygame
+import pygame_gui
+
+from utils import SceneManager
+
+# Initialize pygame and create a window
 pygame.init()
+screen = pygame.display.set_mode((800, 600))
+pygame.display.set_caption("UnoCatMe")
 
-# Set up the display
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("Unocatme")
+# Set up the GUI manager
+gui_manager = pygame_gui.UIManager((800, 600))
 
-# Create instances of the game states
-state_mapping = {
-    "LANDING": LandingState(),
-    "MENU": MenuState(),
-    "PLAYING": PlayingState()
-}
+# Set up clock for controlling the frame rate
+clock = pygame.time.Clock()
 
-# Set the initial states
-current_state = state_mapping["LANDING"]
+# Create a SceneManager instance
+scene_manager = SceneManager(screen, gui_manager)
 
-# Main game loop
-running = True
-while running:
-    screen.fill((0, 0, 0))
+while True:
+    time_delta = clock.tick(60) / 1000.0
 
-    # Process events
-    events = pygame.event.get()
-    for event in events:
-        if event.type == pygame.QUIT:
-            running = False
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            pygame.quit()
+            sys.exit()
 
-    # Update the current states
-    next_state_name, args = current_state.handle_events(events)
-    if next_state_name:
-        current_state = state_mapping[next_state_name]
-        current_state.reset(*args)
+        scene_manager.process_events(event)
+        gui_manager.process_events(event)
 
-    current_state.update()
+    gui_manager.update(time_delta)
+    scene_manager.update()
 
-    # Draw the current states
-    current_state.draw(screen)
-
+    scene_manager.draw()
     pygame.display.flip()
-    pygame.time.Clock().tick(60)
 
-pygame.quit()
-sys.exit()
+#pygame.quit()
