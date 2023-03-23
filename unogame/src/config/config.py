@@ -4,11 +4,11 @@ SCREEN_HEIGHT = 720
 
 
 def vw(width):
-    return (width * SCREEN_WIDTH) / 1280
+    return (width * SCREEN_WIDTH) / 100
 
 
 def vh(height):
-    return (height * SCREEN_HEIGHT) / 720
+    return (height * SCREEN_HEIGHT) / 100
 
 
 def vp(width, height):

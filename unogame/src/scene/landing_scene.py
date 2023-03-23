@@ -12,7 +12,7 @@ class LandingScene(Scene):
         self.state = LandingState()
         self.logo_image = pygame.image.load("assets/logo.png")
         self.single_play_button = pygame_gui.elements.UIButton(
-            relative_rect=pygame.Rect((vw(550), vh(225)), (vw(100), vh(175))),
+            relative_rect=pygame.Rect((vw(40), vh(30)), (vw(8), vh(25))),
             text="Landing",
             manager=self.gui_manager
         )
