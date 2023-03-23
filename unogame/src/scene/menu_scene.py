@@ -5,7 +5,7 @@ from states import MenuState
 from widgets import ScrollableUIButton
 from .scene import Scene
 
-from config import SCREEN_WIDTH, SCREEN_HEIGHT, vw, vh
+from config import SCREEN_WIDTH, SCREEN_HEIGHT, vw, vh, vp
 
 
 class MenuScene(Scene):
@@ -52,7 +52,7 @@ class MenuScene(Scene):
 
     def initialize_buttons(self):
         self.sound_toggle_button = pygame_gui.elements.UIButton(
-            relative_rect=pygame.Rect((SCREEN_WIDTH-vw(80), SCREEN_HEIGHT-vh(80)), (vw(40), vh(40))),
+            relative_rect=pygame.Rect((SCREEN_WIDTH-vw(80), SCREEN_HEIGHT-vh(80)), vp(40,40)),
             text="Sound",
             manager=self.gui_manager
         )
@@ -86,6 +86,6 @@ class MenuScene(Scene):
 
     def draw(self):
         self.screen.fill((0, 0, 0))
-        self.logo_image = pygame.transform.scale(self.logo_image, (vw(256), vh(100)))
+        self.logo_image = pygame.transform.scale(self.logo_image, vp(256,100))
         self.screen.blit(self.logo_image, ( (SCREEN_WIDTH - vw(256)) / 2 , vh(40)))
         self.gui_manager.draw_ui(self.screen)
