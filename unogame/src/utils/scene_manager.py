@@ -18,7 +18,7 @@ class SceneManager:
             scene_name.PLAYING_GAME: PlayingScene,
             scene_name.CONFIGURATION: ConfigurationScene,
         }
-        self.current_scene = self.scenes[scene_name.LANDING](screen, gui_manager)
+        self.current_scene = self.scenes[scene_name.MAIN_MENU](screen, gui_manager)
 
     def update(self):
         if self.current_scene.state.changed:

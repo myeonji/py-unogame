@@ -22,5 +22,23 @@
       "filled_bar": "#f4251b",
       "unfilled_bar": "#CCCCCC"
     }
+  },
+  "@main_menu_btns": {
+    "colours": {
+      "normal_bg": "#00000000"
+    },
+    "misc": {
+      "border_width": "0",
+      "shadow_width": "0"
+    }
+  },
+  "@main_menu_below_btns": {
+    "colours": {
+      "normal_bg": "#00000000"
+    },
+    "misc": {
+      "border_width": "0",
+      "shadow_width": "0"
+    }
   }
 }
