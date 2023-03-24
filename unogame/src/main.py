@@ -13,7 +13,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("UnoCatMe")
 
 # Set up the GUI manager
-gui_manager = pygame_gui.UIManager((SCREEN_WIDTH, SCREEN_HEIGHT))
+gui_manager = pygame_gui.UIManager((SCREEN_WIDTH, SCREEN_HEIGHT), "theme.json")
 gui_manager.set_visual_debug_mode(True)
 
 # Set up clock for controlling the frame rate

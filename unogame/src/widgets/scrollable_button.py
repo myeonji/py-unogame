@@ -3,10 +3,11 @@ from typing import Tuple, Union, Optional, Dict, Iterable
 import pygame
 from pygame_gui.core import IContainerLikeInterface, UIElement, ObjectID
 from pygame_gui.core.interfaces import IUIManagerInterface
-from pygame_gui.elements import UIButton
+
+from widgets import FocusableUIButton
 
 
-class ScrollableUIButton(UIButton):
+class ScrollableUIButton(FocusableUIButton):
     def __init__(self, relative_rect: Union[pygame.Rect, Tuple[float, float], pygame.Vector2], text: str,
                  manager: Optional[IUIManagerInterface] = None, container: Optional[IContainerLikeInterface] = None,
                  tool_tip_text: Union[str, None] = None, starting_height: int = 1, parent_element: UIElement = None,
@@ -20,3 +21,4 @@ class ScrollableUIButton(UIButton):
                          tool_tip_object_id=tool_tip_object_id, text_kwargs=text_kwargs,
                          tool_tip_text_kwargs=tool_tip_text_kwargs)
         self.starting_rect = relative_rect
+

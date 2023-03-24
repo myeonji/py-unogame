@@ -1,6 +1,7 @@
 from utils import scene_name
 from scene import MenuScene,LandingScene,PlayingScene,ConfigurationScene
 
+
 class SceneManager:
     _instance = None
 

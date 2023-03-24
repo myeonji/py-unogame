@@ -7,6 +7,7 @@ from states import LandingState
 from config import SCREEN_WIDTH, SCREEN_HEIGHT, vw, vh
 
 class LandingScene(Scene):
+
     def __init__(self, screen, gui_manager):
         super().__init__(screen, gui_manager)
         self.state = LandingState()
