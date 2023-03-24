@@ -12,9 +12,11 @@ class MenuScene(Scene):
     def __init__(self, screen, gui_manager):
         super().__init__(screen, gui_manager)
 
+        self.main_bg_image = None
         self.sound_toggle_button = None
         self.state = MenuState()
         self.current_focused_button = -1
+        self.main_image = pygame.image.load("assets/main_bg.png")
         self.logo_image = pygame.image.load("assets/logo.png")
 
         self.scrollable_area_rect = pygame.Rect(vw(0), vh(16), SCREEN_WIDTH, vh(47))
@@ -98,7 +100,8 @@ class MenuScene(Scene):
     #                    self.state.exit()
 
     def draw(self):
-        self.screen.fill((0, 0, 0))
+        self.main_image = pygame.transform.scale(self.main_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
         self.logo_image = pygame.transform.scale(self.logo_image, vp(20,14))
-        self.screen.blit(self.logo_image, ( (SCREEN_WIDTH - vw(20)) / 2 , vh(5)))
+        self.screen.blit(self.main_image, (0, 0))
+        self.screen.blit(self.logo_image, ((SCREEN_WIDTH - vw(20)) / 2 , vh(5)))
         self.gui_manager.draw_ui(self.screen)
