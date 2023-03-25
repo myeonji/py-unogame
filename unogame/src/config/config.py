@@ -1,16 +1,17 @@
 # Screen dimensions
+import pygame
+
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 
 
 def vw(width):
-    return (width * SCREEN_WIDTH) / 100
+    return (width * SCREEN_WIDTH) / 1280
 
 
 def vh(height):
-    return (height * SCREEN_HEIGHT) / 100
+    return (height * SCREEN_HEIGHT) / 720
 
 
 def vp(width, height):
     return vw(width), vh(height)
-
