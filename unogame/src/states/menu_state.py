@@ -15,5 +15,10 @@ class MenuState(GameState):
     def open_configuration(self):
         self.active_overlay(overlay_name.CONFIGURATION)
 
+    def toggle_configuration(self):
+        if self.overlay_active:
+            self.inactive_overlay(overlay_name.CONFIGURATION)
+        else:
+            self.active_overlay(overlay_name.CONFIGURATION)
     def exit(self):
         pygame.quit()

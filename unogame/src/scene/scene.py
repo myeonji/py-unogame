@@ -1,3 +1,5 @@
+from abc import abstractmethod
+
 
 class Scene:
     focusable_buttons = []
@@ -9,7 +11,16 @@ class Scene:
         self.gui_manager.clear_and_reset()
         pass
 
+    @abstractmethod
     def draw(self):
+        pass
+
+    @abstractmethod
+    def resize_images(self):
+        pass
+
+    @abstractmethod
+    def initialize_elements(self):
         pass
 
 

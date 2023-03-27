@@ -3,6 +3,7 @@ class GameState:
         self.scene_changed = False
         self.next_scene_name = None
         self.overlay_active_changed = False
+        self.overlay_active = False
         self.overlay_scene_name = None
 
     def handle_events(self, events):
@@ -17,4 +18,8 @@ class GameState:
 
     def active_overlay(self, overlay_scene_name):
         self.overlay_active_changed = True
+        self.overlay_scene_name = overlay_scene_name
+
+    def inactive_overlay(self, overlay_scene_name):
+        self.overlay_active_changed = False
         self.overlay_scene_name = overlay_scene_name

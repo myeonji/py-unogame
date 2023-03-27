@@ -2,8 +2,9 @@ import pygame
 import pygame_gui
 from pygame_gui.core import ObjectID
 
-from config import vp, vw, vh, SCREEN_WIDTH, SCREEN_HEIGHT
+from config import vp, vw, vh, SCREEN_WIDTH, SCREEN_HEIGHT, KEYBOARD_MAP
 from states import ConfigurationState
+from utils import action_name
 from widgets.overlay import OverlayScene
 
 
@@ -54,12 +55,17 @@ class ConfigurationOverlayScene(OverlayScene):
 
     def process_events(self, event):
         super().process_events(event)
+        if event.type == pygame.KEYDOWN:
+            key_event = event.key
+            action = KEYBOARD_MAP[key_event]
+            if action == action_name.PAUSE:
+                self.set_inactive()
+
         if event.type == pygame.USEREVENT:
             if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
                 if event.ui_element == self.back_button:
                     self.state.back_to_main_menu()
                 if event.ui_element.get_object_ids() == self.close_button.get_object_ids():
                     self.set_inactive()
-
     def draw(self):
         super().draw()
