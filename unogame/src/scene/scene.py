@@ -1,5 +1,6 @@
 
 class Scene:
+    focusable_buttons = []
 
     def __init__(self, screen, gui_manager):
         self.screen = screen
