@@ -2,13 +2,18 @@ import pygame
 import pygame_gui
 from pygame_gui.core import ObjectID
 
-from config import SCREEN_WIDTH, SCREEN_HEIGHT, vw, vh, vp
+from config import SCREEN_WIDTH, SCREEN_HEIGHT, vw, vh, vp, KEYBOARD_MAP
 from states import MenuState
+from utils import action_name
 from widgets import ScrollableUIButton, FocusableUIButton
 from .scene import Scene
 
 
 class MenuScene(Scene):
+    def initialize_elements(self):
+        self.create_scrollable_buttons()
+        self.create_below_buttons()
+
     def __init__(self, screen, gui_manager):
         super().__init__(screen, gui_manager)
 
@@ -39,15 +44,14 @@ class MenuScene(Scene):
         self.target_scroll_offset_x = 0
         self.scroll_speed = 0.2
 
-        self.initialize_images()
-        self.create_scrollable_buttons()
-        self.create_below_buttons()
+        self.resize_images()
+        self.initialize_elements()
 
-
-    def initialize_images(self):
+    def resize_images(self):
+        super().resize_images()
         self.main_image = pygame.transform.scale(self.main_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
         self.logo_image = pygame.transform.smoothscale(self.logo_image, vp(100, 100))
-        self.btn_image = pygame.transform.smoothscale(self.btn_image, vp(289,403))
+        self.btn_image = pygame.transform.smoothscale(self.btn_image, vp(289, 403))
         self.btn_exit = pygame.transform.smoothscale(self.btn_exit, vp(115, 115))
         self.btn_ranking = pygame.transform.smoothscale(self.btn_ranking, vp(115, 115))
         self.btn_setting = pygame.transform.smoothscale(self.btn_setting, vp(115, 115))
@@ -71,20 +75,22 @@ class MenuScene(Scene):
 
     def create_below_buttons(self):
         btn_setting = FocusableUIButton(
-            relative_rect=pygame.Rect(( (SCREEN_WIDTH - vw(115)) / 2 - vw(86 + 115), SCREEN_HEIGHT - vh(152)), vp(115, 115)),
+            relative_rect=pygame.Rect(((SCREEN_WIDTH - vw(115)) / 2 - vw(86 + 115), SCREEN_HEIGHT - vh(152)),
+                                      vp(115, 115)),
             text="",
             manager=self.gui_manager,
             object_id=ObjectID(object_id=f"button_b_1", class_id="@main_menu_below_btns")
         )
         btn_ranking = FocusableUIButton(
-            relative_rect=pygame.Rect(( (SCREEN_WIDTH - vw(115)) / 2, SCREEN_HEIGHT - vh(152)), vp(115, 115)),
+            relative_rect=pygame.Rect(((SCREEN_WIDTH - vw(115)) / 2, SCREEN_HEIGHT - vh(152)), vp(115, 115)),
             text="",
             manager=self.gui_manager,
             object_id=ObjectID(object_id=f"button_b_2", class_id="@main_menu_below_btns")
 
         )
         btn_exit = FocusableUIButton(
-            relative_rect=pygame.Rect(( (SCREEN_WIDTH - vw(115)) / 2 + vw(86 + 115), SCREEN_HEIGHT - vh(152)), vp(115, 115)),
+            relative_rect=pygame.Rect(((SCREEN_WIDTH - vw(115)) / 2 + vw(86 + 115), SCREEN_HEIGHT - vh(152)),
+                                      vp(115, 115)),
             text="",
             manager=self.gui_manager,
             object_id=ObjectID(object_id=f"button_b_3", class_id="@main_menu_below_btns")
@@ -95,37 +101,41 @@ class MenuScene(Scene):
         btn_setting.drawable_shape.active_state.has_fresh_surface = True
         btn_ranking.drawable_shape.active_state.has_fresh_surface = True
         btn_exit.drawable_shape.active_state.has_fresh_surface = True
-        self.focusable_buttons.extend([btn_setting,btn_ranking,btn_exit])
+        self.focusable_buttons.extend([btn_setting, btn_ranking, btn_exit])
 
     def process_events(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if event.button == 4:  # Mouse wheel up
+            if event.button == 4 or event.button == 1:  # Mouse wheel up
                 self.target_scroll_offset_x += vw(60)
-            elif event.button == 5:  # Mouse wheel down
+            elif event.button == 5 or event.button == 3:  # Mouse wheel down
                 self.target_scroll_offset_x -= vw(60)
-
-            # Prevent scrolling beyond content
             self.target_scroll_offset_x = min(self.target_scroll_offset_x, vw(15))
             max_scroll = (len(self.scrollable_buttons) - 3.5) * (
-                        self.scrollable_button_width + self.scrollable_button_margin) + self.scrollable_button_margin * 2
+                    self.scrollable_button_width + self.scrollable_button_margin) + self.scrollable_button_margin * 2
             self.target_scroll_offset_x = max(self.target_scroll_offset_x, -max_scroll)
             self.scroll_offset_x += (self.target_scroll_offset_x - self.scroll_offset_x) * self.scroll_speed
 
             for button in self.scrollable_buttons:
                 button.set_position((button.starting_rect.x + self.scroll_offset_x, button.rect.y))
-        key_event = pygame.key.get_pressed()
+
         if event.type == pygame.KEYDOWN:
-            if key_event[pygame.K_LEFT] or key_event[pygame.K_UP]:
+
+            key_event = event.key
+            action = KEYBOARD_MAP[key_event]
+            if action == action_name.MOVE_UP or action == action_name.MOVE_LEFT:
                 self.current_focused_button = (self.current_focused_button - 1) % len(self.focusable_buttons)
                 self.gui_manager.set_focus_set(self.focusable_buttons[self.current_focused_button])
                 print(self.gui_manager.get_focus_set(), self.current_focused_button)
 
-            if key_event[pygame.K_RIGHT] or key_event[pygame.K_DOWN]:
+            if action == action_name.MOVE_DOWN or action == action_name.MOVE_RIGHT:
                 self.current_focused_button = (self.current_focused_button + 1) % len(self.focusable_buttons)
                 self.gui_manager.set_focus_set(self.focusable_buttons[self.current_focused_button])
                 print(self.gui_manager.get_focus_set(), self.current_focused_button)
             # todo: 버튼 포커싱에 맞게 움직이도록 하기.
-            if key_event[pygame.K_RETURN]:
+            if action == action_name.PAUSE:
+                self.state.toggle_configuration()
+
+            if action == action_name.RETURN:
                 ui_element = self.focusable_buttons[self.current_focused_button]
                 if ui_element == self.scrollable_buttons[0]:
                     self.state.start_single_play()

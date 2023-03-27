@@ -32,10 +32,7 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-
         scene_manager.process_events(event)
-        gui_manager.process_events(event)
-        overlay_manager.process_events(event)
 
     gui_manager.update(time_delta)
     overlay_manager.update(time_delta)
