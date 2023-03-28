@@ -10,7 +10,7 @@ class MenuState(GameState):
         self.changed = False
 
     def start_single_play(self):
-        self.move_scene(scene_name.PLAYING_GAME)
+        self.move_scene(scene_name.LOBBY_SCENE)
 
     def open_configuration(self):
         self.active_overlay(overlay_name.CONFIGURATION)
