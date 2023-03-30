@@ -2,7 +2,9 @@ import pygame
 import pygame_gui
 from pygame_gui.core import ObjectID
 
-from config import vp, vw, vh, SCREEN_WIDTH, SCREEN_HEIGHT, KEYBOARD_MAP
+from assets import image_keys
+from assets.image_loader import ImageLoader
+from config import vp, vw, vh, SCREEN_WIDTH, SCREEN_HEIGHT, get_action
 from states import ConfigurationState
 from utils import action_name
 from widgets.overlay import OverlayScene
@@ -10,9 +12,9 @@ from widgets.overlay import OverlayScene
 
 class ConfigurationOverlayScene(OverlayScene):
 
-    def __init__(self, screen, overlay_manager):
-        super().__init__(screen, overlay_manager)
-        self.close_btn_image = pygame.image.load("assets/btn_close_overlay.png")
+    def __init__(self, screen, overlay_manager, image_loader):
+        super().__init__(screen, overlay_manager, image_loader)
+        self.close_btn_image = ImageLoader.get_image(image_loader, image_keys.IMG_BTN_CLOSE_OVERLAY)
         self.close_btn_image = pygame.transform.smoothscale(self.close_btn_image, vp(60, 60))
         self.state = ConfigurationState()
         self.panel = pygame_gui.elements.UIPanel(
@@ -57,7 +59,7 @@ class ConfigurationOverlayScene(OverlayScene):
         super().process_events(event)
         if event.type == pygame.KEYDOWN:
             key_event = event.key
-            action = KEYBOARD_MAP[key_event]
+            action = get_action(key_event)
             if action == action_name.PAUSE:
                 self.set_inactive()
 

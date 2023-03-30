@@ -1,6 +1,6 @@
 import pygame
 
-from config import KEYBOARD_MAP
+from config import get_action
 from scene import Scene
 from states.lobby_state import LobbyState
 from utils import action_name, overlay_name
@@ -10,7 +10,7 @@ class LobbyScene(Scene):
     def process_events(self, event):
         if event.type == pygame.KEYDOWN:
             key_event = event.key
-            action = KEYBOARD_MAP[key_event]
+            action = get_action(key_event)
             if action == action_name.RETURN:
                 self.state.start_single_play()
             if action == action_name.PAUSE:
@@ -22,8 +22,8 @@ class LobbyScene(Scene):
     def initialize_elements(self):
         pass
 
-    def __init__(self, screen, gui_manager):
-        super().__init__(screen, gui_manager)
+    def __init__(self, screen, gui_manager, image_loader):
+        super().__init__(screen, gui_manager, image_loader)
         self.state = LobbyState()
         self.resize_images()
         self.initialize_elements()
