@@ -1,3 +1,4 @@
+from scene.lobby_scene import LobbyScene
 from utils import scene_name, overlay_name
 from scene import MenuScene,LandingScene,PlayingScene,ConfigurationOverlayScene
 
@@ -18,13 +19,14 @@ class SceneManager:
         self.scenes = {
             scene_name.LANDING: LandingScene,
             scene_name.MAIN_MENU: MenuScene,
-            scene_name.PLAYING_GAME: PlayingScene
+            scene_name.PLAYING_GAME: PlayingScene,
+            scene_name.LOBBY_SCENE: LobbyScene
         }
         self.overlay_scenes = {
             overlay_name.CONFIGURATION: ConfigurationOverlayScene
         }
 
-        self.current_scene = self.scenes[scene_name.MAIN_MENU](screen, gui_manager)
+        self.current_scene = self.scenes[scene_name.PLAYING_GAME](screen, gui_manager)
         self.current_overlay = self.overlay_scenes[overlay_name.CONFIGURATION](screen, overlay_manager)
 
     def update(self):
@@ -32,7 +34,7 @@ class SceneManager:
             self.current_scene.state.scene_changed = False
             self.current_scene = self.scenes[self.current_scene.state.next_scene_name](self.screen, self.gui_manager)
             print("Scene moved(Current Scene) : ", self.current_scene)
-            
+
         if self.current_scene.state.overlay_active_changed:
             self.current_scene.state.overlay_active_changed = False
             self.current_overlay = self.overlay_scenes[self.current_scene.state.overlay_scene_name](self.screen, self.overlay_manager)

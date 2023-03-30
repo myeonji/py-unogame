@@ -16,7 +16,7 @@ class OverlayScene():
         self.overlay_bg_image = pygame.image.load("assets/overlay_bg.png")
 
         self.overlay_surface = pygame.Surface((SCREEN_WIDTH,SCREEN_HEIGHT), pygame.SRCALPHA)
-        self.overlay_surface.fill((0, 0, 0, 64))  # RGBA: (0, 0, 0, 128) gives a 50% transparent black overlay
+        self.overlay_surface.fill((0, 0, 0, 128))  # RGBA: (0, 0, 0, 128) gives a 50% transparent black overlay
         self.panel = None
 
     def set_active(self):

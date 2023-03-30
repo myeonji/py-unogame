@@ -16,6 +16,10 @@ class Scene:
         pass
 
     @abstractmethod
+    def process_events(self, event):
+        pass
+
+    @abstractmethod
     def resize_images(self):
         pass
 
