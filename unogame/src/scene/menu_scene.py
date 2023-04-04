@@ -2,7 +2,9 @@ import pygame
 import pygame_gui
 from pygame_gui.core import ObjectID
 
-from config import SCREEN_WIDTH, SCREEN_HEIGHT, vw, vh, vp, KEYBOARD_MAP
+from assets import image_keys
+from assets.image_loader import ImageLoader
+from config import SCREEN_WIDTH, SCREEN_HEIGHT, vw, vh, vp, get_action
 from states import MenuState
 from utils import action_name
 from widgets import ScrollableUIButton, FocusableUIButton
@@ -14,19 +16,19 @@ class MenuScene(Scene):
         self.create_scrollable_buttons()
         self.create_below_buttons()
 
-    def __init__(self, screen, gui_manager):
-        super().__init__(screen, gui_manager)
+    def __init__(self, screen, gui_manager, image_loader:ImageLoader):
+        super().__init__(screen, gui_manager, image_loader)
 
         self.sound_toggle_button = None
         self.state = MenuState()
         self.current_focused_button = -1
 
-        self.main_image = pygame.image.load("assets/main_bg.png")
-        self.logo_image = pygame.image.load("assets/logo.png")
-        self.btn_image = pygame.image.load("assets/menu_btn.png")
-        self.btn_exit = pygame.image.load("assets/btn_exit.png")
-        self.btn_ranking = pygame.image.load("assets/btn_ranking.png")
-        self.btn_setting = pygame.image.load("assets/btn_setting.png")
+        self.main_image = image_loader.get_image(image_keys.IMG_MAIN_BG) #pygame.image.load("assets/main_bg.png")
+        self.logo_image = image_loader.get_image(image_keys.IMG_LOGO) #pygame.image.load("assets/logo.png")
+        self.btn_image = image_loader.get_image(image_keys.IMG_BTN_MENU) #pygame.image.load("assets/menu_btn.png")
+        self.btn_exit = image_loader.get_image(image_keys.IMG_BTN_EXIT) #pygame.image.load("assets/btn_exit.png")
+        self.btn_ranking = image_loader.get_image(image_keys.IMG_BTN_RANKING) #pygame.image.load("assets/btn_ranking.png")
+        self.btn_setting = image_loader.get_image(image_keys.IMG_BTN_SETTING) #pygame.image.load("assets/btn_setting.png")
 
         self.scrollable_area_rect = pygame.Rect(vw(0), vh(124), SCREEN_WIDTH, vh(403))
         self.scrollable_button_width = vw(289)
@@ -119,9 +121,8 @@ class MenuScene(Scene):
                 button.set_position((button.starting_rect.x + self.scroll_offset_x, button.rect.y))
 
         if event.type == pygame.KEYDOWN:
-
             key_event = event.key
-            action = KEYBOARD_MAP[key_event]
+            action = get_action(key_event)
             if action == action_name.MOVE_UP or action == action_name.MOVE_LEFT:
                 self.current_focused_button = (self.current_focused_button - 1) % len(self.focusable_buttons)
                 self.gui_manager.set_focus_set(self.focusable_buttons[self.current_focused_button])
