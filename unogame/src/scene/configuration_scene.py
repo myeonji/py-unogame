@@ -12,10 +12,10 @@ from widgets.overlay import OverlayScene
 
 class ConfigurationOverlayScene(OverlayScene):
 
-    def __init__(self, screen, overlay_manager, image_loader):
-        super().__init__(screen, overlay_manager, image_loader)
-        self.close_btn_image = ImageLoader.get_image(image_loader, image_keys.IMG_BTN_CLOSE_OVERLAY)
-        self.close_btn_image = pygame.transform.smoothscale(self.close_btn_image, vp(60, 60))
+    def __init__(self, screen, overlay_manager): #, image_loader):
+        super().__init__(screen, overlay_manager) #, image_loader)
+        #self.close_btn_image = ImageLoader.get_image(image_loader, image_keys.IMG_BTN_CLOSE_OVERLAY)
+#        self.close_btn_image = pygame.transform.smoothscale(self.close_btn_image, vp(60, 60))
         self.state = ConfigurationState()
         self.panel = pygame_gui.elements.UIPanel(
             relative_rect=pygame.Rect(vw(149), (SCREEN_HEIGHT - vh(633)) / 2, vw(984), vh(633)),
@@ -23,8 +23,8 @@ class ConfigurationOverlayScene(OverlayScene):
             starting_layer_height=2,
             object_id=ObjectID(object_id="overlay_panel", class_id="@overlay_panels")
         )
-        self.overlay_bg_image = pygame.transform.smoothscale(self.overlay_bg_image, vp(984, 633))
-        self.panel.drawable_shape.states['normal'].surface.blit(self.overlay_bg_image, (0, 0))
+#        self.overlay_bg_image = pygame.transform.smoothscale(self.overlay_bg_image, vp(984, 633))
+ #       self.panel.drawable_shape.states['normal'].surface.blit(self.overlay_bg_image, (0, 0))
         self.panel.drawable_shape.active_state.has_fresh_surface = True
         self.create_elements()
         self.create_ui_elements()
@@ -37,7 +37,7 @@ class ConfigurationOverlayScene(OverlayScene):
             container=self.panel,
             object_id=ObjectID(object_id="close_button", class_id="@main_menu_btns")
         )
-        self.close_button.drawable_shape.states['normal'].surface.blit(self.close_btn_image, (0, 0))
+#        self.close_button.drawable_shape.states['normal'].surface.blit(self.close_btn_image, (0, 0))
         self.close_button.drawable_shape.active_state.has_fresh_surface = True
 
 

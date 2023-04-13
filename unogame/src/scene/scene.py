@@ -4,12 +4,12 @@ from abc import abstractmethod
 class Scene:
     focusable_buttons = []
 
-    def __init__(self, screen, gui_manager, image_loader):
+    def __init__(self, screen, gui_manager):
         self.screen = screen
         self.gui_manager = gui_manager
         self.state = None
         self.gui_manager.clear_and_reset()
-        self.image_loader = image_loader
+        #self.image_loader = image_loader
         pass
 
     @abstractmethod

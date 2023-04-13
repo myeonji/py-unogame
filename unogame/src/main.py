@@ -4,7 +4,7 @@ from pygame.locals import *
 
 import pygame_gui
 
-from utils import SceneManager
+from utils.scene_manager import SceneManager
 from config import SCREEN_WIDTH, SCREEN_HEIGHT, vw, vh
 from assets.image_loader import ImageLoader
 
@@ -23,9 +23,9 @@ overlay_manager.set_visual_debug_mode(True)
 # Set up clock for controlling the frame rate
 clock = pygame.time.Clock()
 
-image_loader = ImageLoader()
+#image_loader = ImageLoader()
 # Create a SceneManager instance
-scene_manager = SceneManager(screen, gui_manager, overlay_manager, image_loader)
+scene_manager = SceneManager(screen, gui_manager, overlay_manager)
 
 while True:
     time_delta = clock.tick(60) / 1000.0
