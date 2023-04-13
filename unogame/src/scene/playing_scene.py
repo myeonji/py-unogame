@@ -2,7 +2,9 @@ import pygame
 from pygame_gui.core import ObjectID
 from pygame_gui.elements import UIButton
 
-from config import KEYBOARD_MAP, vp, vw, vh
+from assets import image_keys
+from assets.image_loader import ImageLoader
+from config import vp, vw, vh, get_action
 from scene import Scene
 from states import PlayingState
 from utils import action_name, overlay_name
@@ -23,18 +25,18 @@ class PlayingScene(Scene):
         view_current_card.drawable_shape.states['normal'].surface.blit(self.card_image, (0, 0))
         view_current_card.drawable_shape.active_state.has_fresh_surface = True
 
-    def __init__(self, screen, gui_manager):
-        super().__init__(screen, gui_manager)
+    def __init__(self, screen, gui_manager, image_loader: ImageLoader):
+        super().__init__(screen, gui_manager, image_loader)
         self.state = PlayingState()
 
-        self.card_image = pygame.image.load("assets/card.png")
+        self.card_image = image_loader.get_image(image_keys.IMG_CARD)
         self.resize_images()
         self.initialize_elements()
 
     def process_events(self, event):
         if event.type == pygame.KEYDOWN:
             key_event = event.key
-            action = KEYBOARD_MAP[key_event]
+            action = get_action(key_event)
             if action == action_name.PAUSE:
                 self.state.active_overlay(overlay_name.CONFIGURATION)
 
