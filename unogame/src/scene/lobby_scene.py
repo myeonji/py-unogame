@@ -2,7 +2,7 @@ import pygame
 import pygame_gui
 from pygame_gui.core import ObjectID
 
-from config import SCREEN_WIDTH, SCREEN_HEIGHT, vw, vh, vp, KEYBOARD_MAP
+from config.configuration import SCREEN_WIDTH, SCREEN_HEIGHT, vw, vh, vp, KEYBOARD_MAP
 
 from scene import Scene
 from states.lobby_state import LobbyState

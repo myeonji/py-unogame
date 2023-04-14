@@ -10,15 +10,15 @@ from scene import Scene
 
 
 class OverlayScene(Scene):
-    def __init__(self, screen, overlay_manager, image_loader:ImageLoader):
+    def __init__(self, screen, overlay_manager):#, image_loader:ImageLoader):
 
-        super().__init__(screen, overlay_manager, image_loader)
+        super().__init__(screen, overlay_manager)#, image_loader)
         self.screen = screen
         self.close_button = None
         self.overlay_manager = overlay_manager
         self.active = False
         self.state = None
-        self.overlay_bg_image = image_loader.get_image(image_keys.IMG_CONFIG_OVERLAY_BG)
+        #self.overlay_bg_image = image_loader.get_image(image_keys.IMG_CONFIG_OVERLAY_BG)
 
         self.overlay_surface = pygame.Surface((SCREEN_WIDTH,SCREEN_HEIGHT), pygame.SRCALPHA)
         self.overlay_surface.fill((0, 0, 0, 128))  # RGBA: (0, 0, 0, 128) gives a 50% transparent black overlay
