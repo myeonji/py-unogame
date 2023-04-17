@@ -15,7 +15,8 @@ class FocusableUIButton(UIButton):
                  allow_double_clicks: bool = False,
                  generate_click_events_from: Iterable[int] = frozenset([pygame.BUTTON_LEFT]), visible: int = 1, *,
                  tool_tip_object_id: Optional[ObjectID] = None, text_kwargs: Optional[Dict[str, str]] = None,
-                 tool_tip_text_kwargs: Optional[Dict[str, str]] = None):
+                 tool_tip_text_kwargs: Optional[Dict[str, str]] = None,
+                 ):
         super().__init__(relative_rect, text, manager, container, tool_tip_text, starting_height, parent_element,
                          object_id, anchors, allow_double_clicks, generate_click_events_from, visible,
                          tool_tip_object_id=tool_tip_object_id, text_kwargs=text_kwargs,

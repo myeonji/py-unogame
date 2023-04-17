@@ -58,7 +58,7 @@ class Networking:
     def throw_card(self, card: int | Card, ignore: bool = False) -> bool:
 
         if type(card) == int:
-            card_object = self.user.deck.cards[card]
+            card_object = self.useur.deck.cards[card]
         else:
             card_object = card
         result = self.current_game.deck.append_card(card_object, ignore=ignore)
